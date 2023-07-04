@@ -10,6 +10,8 @@ public class GridSpace : MonoBehaviour
     public Text buttonText;
     public string playerSide;
 
+    private GameController gameController;
+
     /**
      * Set the text and disable the button
     */
@@ -17,6 +19,11 @@ public class GridSpace : MonoBehaviour
     {
         buttonText.text = playerSide; //change the text in the button
         button.interactable = false; //disable the button
+    }
+
+    public void setGameControllerReference(GameController controller)
+    {
+        gameController = controller;
     }
 
 }
