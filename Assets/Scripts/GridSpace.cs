@@ -7,6 +7,7 @@ public class GridSpace : MonoBehaviour
 {
     //variables
     public Button button;
+    public Text buttonText;
     public string playerSide;
 
     /**
@@ -14,7 +15,7 @@ public class GridSpace : MonoBehaviour
     */
     public void setSpace()
     {
-        buttonText.GetComponentInChildren<Text>().text = playerSide; //change the text in the button
+        buttonText.text = playerSide; //change the text in the button
         button.interactable = false; //disable the button
     }
 
