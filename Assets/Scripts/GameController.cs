@@ -11,11 +11,14 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel;
     public Text gameOverText;
 
+    private int moveCount; //to count the moves, so if it hits 9 it means that all the buttons are full
+
     void Awake()
     {
         gameOverPanel.SetActive(false);
         setGameControllerReferenceOnButtons();
         playerSide = "X";
+        moveCount = 0;
     }
 
     void setGameControllerReferenceOnButtons()
@@ -33,45 +36,51 @@ public class GameController : MonoBehaviour
 
     public void endTurn()
     {
+        moveCount++;
+
         if ((buttonList[0].text == playerSide) && (buttonList[1].text == playerSide) && (buttonList[2].text == playerSide))
         {
             //if the top row equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if((buttonList[3].text == playerSide) && (buttonList[4].text == playerSide) && (buttonList[5].text == playerSide))
         {
             //if the second row equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[6].text == playerSide) && (buttonList[7].text == playerSide) && (buttonList[8].text == playerSide))
         {
             //if the third row equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[0].text == playerSide) && (buttonList[3].text == playerSide) && (buttonList[6].text == playerSide))
         {
             //if the first column equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[1].text == playerSide) && (buttonList[4].text == playerSide) && (buttonList[7].text == playerSide))
         {
             //if the second column equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[2].text == playerSide) && (buttonList[5].text == playerSide) && (buttonList[8].text == playerSide))
         {
             //if the third column equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[0].text == playerSide) && (buttonList[4].text == playerSide) && (buttonList[8].text == playerSide))
         {
             //if the diagonal column equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
         }
         else if ((buttonList[6].text == playerSide) && (buttonList[4].text == playerSide) && (buttonList[2].text == playerSide))
         {
             //if the diagonal column equals the player side
-            gameOver();
+            gameOver(playerSide + " Wins!");
+        }
+        else if(moveCount >= 9)
+        {
+            gameOver("It's a draw!");
         }
         else
         {
@@ -79,7 +88,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void gameOver()
+    void gameOver(string gameOverString)
     {
         //disable all the buttons
         for (int i = 0; i < buttonList.Length; i++)
@@ -89,7 +98,7 @@ public class GameController : MonoBehaviour
 
         //display the WIN panel
         gameOverPanel.SetActive(true);
-        gameOverText.text = playerSide + " Wins!";
+        gameOverText.text = gameOverString;
     }
 
     void changePlayerSide()
