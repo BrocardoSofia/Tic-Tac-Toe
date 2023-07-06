@@ -13,12 +13,11 @@ public class GameController : MonoBehaviour
 
     private int moveCount; //to count the moves, so if it hits 9 it means that all the buttons are full
 
+    public GameObject restartButton;
+
     void Awake()
     {
-        gameOverPanel.SetActive(false);
-        setGameControllerReferenceOnButtons();
-        playerSide = "X";
-        moveCount = 0;
+        resetGame();
     }
 
     void setGameControllerReferenceOnButtons()
@@ -26,6 +25,25 @@ public class GameController : MonoBehaviour
         for(int i=0; i<buttonList.Length; i++)
         {
             buttonList[i].GetComponentInParent<GridSpace>().setGameControllerReference(this);
+        }
+    }
+
+    public void resetGame()
+    {
+        gameOverPanel.SetActive(false);
+        setGameControllerReferenceOnButtons();
+        playerSide = "X";
+        moveCount = 0;
+        resetButtons();
+    }
+
+    private void resetButtons()
+    {
+        //disable all the buttons
+        for (int i = 0; i < buttonList.Length; i++)
+        {
+            buttonList[i].GetComponentInParent<Button>().interactable = true;
+            buttonList[i].text = "";
         }
     }
 
