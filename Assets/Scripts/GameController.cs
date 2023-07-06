@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Player
+{
+    public Image panel;
+    public Text text;
+}
+
+[System.Serializable]
+public class PlayerColor
+{
+    public Color panelColor;
+    public Color textColor;
+}
+
 public class GameController : MonoBehaviour
 {
     public Text[] buttonList;
@@ -14,6 +28,12 @@ public class GameController : MonoBehaviour
     private int moveCount; //to count the moves, so if it hits 9 it means that all the buttons are full
 
     public GameObject restartButton;
+
+    //the visual of the player side
+    public Player playerX;
+    public Player playerO;
+    public PlayerColor inactivePlayerColor;
+    public PlayerColor activePlayerColor;
 
     void Awake()
     {
@@ -28,14 +48,15 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //reset the game components
     public void resetGame()
     {
         gameOverPanel.SetActive(false);
         setGameControllerReferenceOnButtons();
-        playerSide = "X";
-        moveCount = 0;
-        resetButtons();
-        restartButton.SetActive(false);
+        playerSide = "X";//start player side
+        moveCount = 0;//no moves made
+        resetButtons();//reset all the buttons for the game
+        restartButton.SetActive(false);//deactivate the restart button
     }
 
     private void resetButtons()
@@ -57,6 +78,7 @@ public class GameController : MonoBehaviour
     {
         moveCount++;
 
+        //evaluate if the game continues or ended on a win or a draw
         if ((buttonList[0].text == playerSide) && (buttonList[1].text == playerSide) && (buttonList[2].text == playerSide))
         {
             //if the top row equals the player side
@@ -103,10 +125,12 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            changePlayerSide();
+            changePlayerSide();//the game continues
         }
     }
 
+    //game over function
+    //this function can be call if a player wins or it's a draw
     void gameOver(string gameOverString)
     {
         //disable all the buttons
@@ -118,9 +142,12 @@ public class GameController : MonoBehaviour
         //display the WIN panel
         gameOverPanel.SetActive(true);
         gameOverText.text = gameOverString;
+
+        //the restart button appears
         restartButton.SetActive(true);
     }
 
+    //changes the player side on the board
     void changePlayerSide()
     {
         if (playerSide == "X")
