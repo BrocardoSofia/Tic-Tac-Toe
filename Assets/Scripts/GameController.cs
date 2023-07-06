@@ -57,6 +57,8 @@ public class GameController : MonoBehaviour
         moveCount = 0;//no moves made
         resetButtons();//reset all the buttons for the game
         restartButton.SetActive(false);//deactivate the restart button
+
+        setPlayerColors(playerX, playerO);
     }
 
     private void resetButtons()
@@ -151,8 +153,23 @@ public class GameController : MonoBehaviour
     void changePlayerSide()
     {
         if (playerSide == "X")
+        {
             playerSide = "O";
+            setPlayerColors(playerO, playerX);
+        }
         else
+        {
             playerSide = "X";
+            setPlayerColors(playerX, playerO);
+        }
+    }
+
+    //set the visual side of the players on the board
+    void setPlayerColors(Player newPlayer, Player oldPlayer)
+    {
+        newPlayer.panel.color = activePlayerColor.panelColor;
+        newPlayer.text.color = activePlayerColor.textColor;
+        oldPlayer.panel.color = inactivePlayerColor.panelColor;
+        oldPlayer.text.color = inactivePlayerColor.textColor;
     }
 }
