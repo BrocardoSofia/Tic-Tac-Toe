@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
         playerSide = "X";
         moveCount = 0;
         resetButtons();
+        restartButton.SetActive(false);
     }
 
     private void resetButtons()
@@ -117,6 +118,7 @@ public class GameController : MonoBehaviour
         //display the WIN panel
         gameOverPanel.SetActive(true);
         gameOverText.text = gameOverString;
+        restartButton.SetActive(true);
     }
 
     void changePlayerSide()
