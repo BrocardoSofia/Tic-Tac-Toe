@@ -48,6 +48,17 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //set the starting side
+    public void setStartingSide(string startingSide)
+    {
+        playerSide = startingSide;
+
+        if (playerSide == "X")
+            setPlayerColors(playerX, playerO);
+        else
+            setPlayerColors(playerO, playerX);
+    }
+
     //reset the game components
     public void resetGame()
     {
