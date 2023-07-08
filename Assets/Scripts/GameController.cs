@@ -64,21 +64,21 @@ public class GameController : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
         setGameControllerReferenceOnButtons();
-        playerSide = "X";//start player side
+        
         moveCount = 0;//no moves made
+
         resetButtons();//reset all the buttons for the game
         restartButton.SetActive(false);//deactivate the restart button
-
-        setPlayerColors(playerX, playerO);
     }
 
     private void resetButtons()
     {
-        //disable all the buttons
+        //reset all the buttons
+        setBoardInteractable(true);
+
         for (int i = 0; i < buttonList.Length; i++)
         {
-            buttonList[i].GetComponentInParent<Button>().interactable = true;
-            buttonList[i].text = "";
+            buttonList[i].text = ""; //clean the text of the buttons
         }
     }
 
@@ -146,11 +146,7 @@ public class GameController : MonoBehaviour
     //this function can be call if a player wins or it's a draw
     void gameOver(string gameOverString)
     {
-        //disable all the buttons
-        for (int i = 0; i < buttonList.Length; i++)
-        {
-            buttonList[i].GetComponentInParent<Button>().interactable = false;
-        }
+        setBoardInteractable(false);
 
         //display the WIN panel
         gameOverPanel.SetActive(true);
@@ -158,6 +154,16 @@ public class GameController : MonoBehaviour
 
         //the restart button appears
         restartButton.SetActive(true);
+    }
+
+    //set the interaction with the board
+    void setBoardInteractable(bool toogle)
+    {
+        //disable all the buttons
+        for (int i = 0; i < buttonList.Length; i++)
+        {
+            buttonList[i].GetComponentInParent<Button>().interactable = toogle;
+        }
     }
 
     //changes the player side on the board
