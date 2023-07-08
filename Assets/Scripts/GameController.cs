@@ -8,6 +8,7 @@ public class Player
 {
     public Image panel;
     public Text text;
+    public Button button;
 }
 
 [System.Serializable]
@@ -25,7 +26,7 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel;
     public Text gameOverText;
 
-    private int moveCount; //to count the moves, so if it hits 9 it means that all the buttons are full
+    private int moveCount = 0; //to count the moves, so if it hits 9 it means that all the buttons are full
 
     public GameObject restartButton;
 
@@ -34,6 +35,8 @@ public class GameController : MonoBehaviour
     public Player playerO;
     public PlayerColor inactivePlayerColor;
     public PlayerColor activePlayerColor;
+
+    public GameObject startInfo;
 
     void Awake()
     {
@@ -57,6 +60,15 @@ public class GameController : MonoBehaviour
             setPlayerColors(playerX, playerO);
         else
             setPlayerColors(playerO, playerX);
+
+        startGame();
+    }
+
+    void startGame()
+    {
+        setBoardInteractable(true);
+        setPlayerButtons(false);
+        startInfo.SetActive(false);
     }
 
     //reset the game components
@@ -64,7 +76,12 @@ public class GameController : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
         setGameControllerReferenceOnButtons();
-        
+
+        setPlayerButtons(true);
+        setPlayerColorsInactive();
+
+        startInfo.SetActive(true);
+
         moveCount = 0;//no moves made
 
         resetButtons();//reset all the buttons for the game
@@ -73,9 +90,6 @@ public class GameController : MonoBehaviour
 
     private void resetButtons()
     {
-        //reset all the buttons
-        setBoardInteractable(true);
-
         for (int i = 0; i < buttonList.Length; i++)
         {
             buttonList[i].text = ""; //clean the text of the buttons
@@ -134,6 +148,7 @@ public class GameController : MonoBehaviour
         }
         else if(moveCount >= 9)
         {
+            setPlayerColorsInactive();
             gameOver("It's a draw!");
         }
         else
@@ -188,5 +203,20 @@ public class GameController : MonoBehaviour
         newPlayer.text.color = activePlayerColor.textColor;
         oldPlayer.panel.color = inactivePlayerColor.panelColor;
         oldPlayer.text.color = inactivePlayerColor.textColor;
+    }
+
+    //set interaction with player button
+    void setPlayerButtons(bool toogle)
+    {
+        playerX.button.interactable = toogle;
+        playerO.button.interactable = toogle;
+    }
+
+    void setPlayerColorsInactive()
+    {
+        playerX.panel.color = inactivePlayerColor.panelColor;
+        playerX.text.color = inactivePlayerColor.textColor;
+        playerO.panel.color = inactivePlayerColor.panelColor;
+        playerO.text.color = inactivePlayerColor.textColor;
     }
 }
