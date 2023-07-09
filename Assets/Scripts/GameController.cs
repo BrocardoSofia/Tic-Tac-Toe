@@ -219,4 +219,9 @@ public class GameController : MonoBehaviour
         playerO.panel.color = inactivePlayerColor.panelColor;
         playerO.text.color = inactivePlayerColor.textColor;
     }
+
+    public void exitGame()
+    {
+        Application.Quit();
+    }
 }
